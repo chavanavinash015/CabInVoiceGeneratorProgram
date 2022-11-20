@@ -10,4 +10,12 @@ public class InvoiceGenerator {
 
         return (distance * MINIMUM_COST_PER_KILOMETER + time * COST_PER_MINUTE);
     }
+
+    public double calculateTotalFare(Ride[] rides) {
+        double aggregateFare = 0;
+        for(Ride ride : rides) {
+            aggregateFare = aggregateFare + this.calculateFare(ride.getDistance(), ride.getTime());
+        }
+        return aggregateFare;
+    }
 }
