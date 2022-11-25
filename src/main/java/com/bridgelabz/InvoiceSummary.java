@@ -36,4 +36,13 @@ public class InvoiceSummary {
     public double getFareAverage() {
         return fareAverage;
     }
+
+    @Override
+    public String toString() {
+        return "InvoiceSummary{" +
+                "numOfRides=" + numOfRides +
+                ", totalFare=" + totalFare +
+                ", fareAverage=" + fareAverage +
+                '}';
+    }
 }
