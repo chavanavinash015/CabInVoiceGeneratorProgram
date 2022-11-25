@@ -64,4 +64,89 @@ public class CabInVoiceGenerator {
         InvoiceSummary expectedInvoiceSummaryUser2 = new InvoiceSummary(4, 200);
         Assertions.assertEquals(expectedInvoiceSummaryUser2, summaryUser2);
     }
+
+    @Test
+    public void givenDistanceAndTime_WhenNormal_ShouldReturnTotalFare() {
+
+        double distance = 2.0;
+        double time = 5.0;
+        String type = "normal";
+        double fare = invoiceGenerator.calculateFare(distance, (int) time, type);
+        Assertions.assertEquals(25, fare, 0.0);
+
+    }
+
+    @Test
+    public void givenLessDistanceAndTime_WhenNormal_ShouldReturnMinFare() {
+
+        double distance = 0.1;
+        double time = 1.0;
+        String type = "normal";
+        double fare = invoiceGenerator.calculateFare(distance, (int) time, type);
+        Assertions.assertEquals(5, fare, 0.0);
+    }
+
+    @Test
+    public void givenMultipleRides_WhenNormal_ShouldReturnTotalFare() {
+
+        Ride[] rides = {new Ride(2.0, 5),
+                new Ride(0.1, 1)};
+        String type = "normal";
+        double totalFare = invoiceGenerator.calculateFare(rides, type);
+        Assertions.assertEquals(2.1, totalFare, 0.0);
+    }
+
+
+    @Test
+    public void givenDistanceAndTime_WhenPremium_ShouldReturnTotalFare() {
+
+        double distance = 2.0;
+        double time = 5.0;
+        String type = "premium";
+        double fare = invoiceGenerator.calculateFare(distance, (int) time, type);
+        Assertions.assertEquals(40, fare, 0.0);
+
+    }
+
+    @Test
+    public void givenLessDistanceAndTime_WhenPremium_ShouldReturnMinFare() {
+
+        double distance = 0.1;
+        int time = 1;
+        String type = "premium";
+        double fare = invoiceGenerator.calculateFare(distance, time, type);
+        Assertions.assertEquals(20, fare, 0.0);
+    }
+
+    @Test
+    public void givenMultipleRides_WhenPremium_ShouldReturnTotalFare() {
+
+        Ride[] rides = {new Ride(2.0, 5),
+                new Ride(0.1, 1)};
+        String type = "premium";
+        double totalFare = invoiceGenerator.calculateFare(rides, type);
+        Assertions.assertEquals(2.1, totalFare, 0.0);
+    }
+
+    @Test
+    public void givenMultipleRides_WhenNormal_ShouldReturnInvoiceSummary() {
+        String type = "Normal";
+        Ride[] rides = {new Ride(2.0, 5),
+                new Ride(0.1, 1),
+        };
+        InvoiceSummary invoiceSummary = invoiceGenerator.calculateTotalFare(rides, type);
+        InvoiceSummary expectedInvoices = new InvoiceSummary(2, 30.0);
+        Assertions.assertEquals(expectedInvoices, invoiceSummary);
+    }
+
+    @Test
+    public void givenMultipleRides_WhenPremium_ShouldReturnInvoiceSummary() {
+        String type = "Premium";
+        Ride[] rides = {new Ride(2.0, 5),
+                new Ride(0.1, 1),
+        };
+        InvoiceSummary invoiceSummary = invoiceGenerator.calculateTotalFare(rides, type);
+        InvoiceSummary expectedInvoices = new InvoiceSummary(2, 60.0);
+        Assertions.assertEquals(expectedInvoices, invoiceSummary);
+    }
 }
